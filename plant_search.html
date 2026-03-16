@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+  <title>WAND³ np search</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+    <div class="app">
+        <h1 class="main_heading">WAND<sup>3</sup></h1>
+        <h2>Search plants</h2>    
+
+        <div class = "search-container">
+            <input
+                id="search-input"
+                type="text"
+                placeholder="Search for plants..."
+                class="search-input"
+            />
+            <div class = "radio-buttons">
+                <label>
+                    <input type = 'radio' name = 'search-type' value = 'name' id = 'exact-search' unchecked>
+                    Name
+                </label>
+                <label>
+                    <input type = 'radio' name = 'search-type' value = 'Family' id = 'exact-search' unchecked>
+                    Family
+                </label>
+                <label>
+                    <input type = 'radio' name = 'search-type' value = 'Genus' id = 'exact-search' unchecked>
+                    Genus
+                </label>
+                <label>
+                    <input type = 'radio' name = 'search-type' value = 'Species' id = 'exact-search' unchecked>
+                    Species
+                </label>
+                <label>
+                    <input type = 'radio' name = 'search-type' value = 'Ethnobotanical Uses' id = 'exact-search' unchecked>
+                    Ethnobotanical Uses
+                </label>
+            </div>
+            <div class = "button-one">
+            <button class="search-buttonINDIVIDUAL" id="btn-plants">Search Plants</button>
+            </div> 
+        </div>    
+    </div>
+</body>
+</html>

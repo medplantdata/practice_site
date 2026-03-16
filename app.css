@@ -65,7 +65,8 @@
   display: flex;
   gap: 8px;
   width: 90%;
-
+  justify-content: center;
+  align-items: center;
 }
 
 .button-one{

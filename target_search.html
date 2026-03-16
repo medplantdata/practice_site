@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+  <title>WAND³ np search</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+    <div class="app">
+        <h1 class="main_heading">WAND<sup>3</sup></h1>
+        <h2>Search targets</h2>    
+
+        <div class = "search-container">
+            <input
+                id="search-input"
+                type="text"
+                placeholder="Search for targets..."
+                class="search-input"
+            />
+            <div class = "radio-buttons">
+                <label>
+                    <input type = 'radio' name = 'search-type' value = 'name' id = 'exact-search' unchecked>
+                    Name
+                </label>
+                <label>
+                    <input type = 'radio' name = 'search-type' value = 'PDB accession' id = 'exact-search' unchecked>
+                    PDB accession
+                </label>
+            </div>
+            <div class = "button-one">
+            <button class="search-buttonINDIVIDUAL" id="btn-targets">Search Targets</button>
+            </div> 
+        </div>    
+    </div>
+</body>
+</html>
