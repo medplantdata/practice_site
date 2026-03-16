@@ -1,48 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+  <meta charset="UTF-8" />
   <title>WAND³ np search</title>
   <link rel="stylesheet" href="app.css" />
 </head>
 <body>
-    <div class="app">
-        <h1 class="main_heading">WAND<sup>3</sup></h1>
-        <h2>Search plants</h2>    
+  <div class="app">
+    <h1 class="main_heading">WAND<sup>3</sup></h1>
+    <h2>Search natural products</h2>    
 
-        <div class = "search-container">
-            <input
-                id="search-input"
-                type="text"
-                placeholder="Search for plants..."
-                class="search-input"
-            />
-            <div class = "radio-buttons">
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'name' id = 'exact-search' unchecked>
-                    Name
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'Family' id = 'exact-search' unchecked>
-                    Family
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'Genus' id = 'exact-search' unchecked>
-                    Genus
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'Species' id = 'exact-search' unchecked>
-                    Species
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'Ethnobotanical Uses' id = 'exact-search' unchecked>
-                    Ethnobotanical Uses
-                </label>
-            </div>
-            <div class = "button-one">
-            <button class="search-buttonINDIVIDUAL" id="btn-plants">Search Plants</button>
-            </div> 
-        </div>    
-    </div>
+    <form method="get" action="plant_search.php" class="search-container">
+      <input
+        id="search-input"
+        name="q"
+        type="text"
+        placeholder="Search for plants..."
+        class="search-input"
+        required
+      />
+
+      <div class="radio-buttons">
+        <label>
+          <input type="radio" name="search-type" value="scientific_name">
+          Scientific Name
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="common_names" checked>
+          Common Name
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="family">
+          Family
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="species">
+          Species
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="genus">
+          Genus
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="uses">
+          Uses
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="locations">
+          Locations
+        </label>
+      </div>
+
+      <div class="button-one">
+        <button class="search-buttonINDIVIDUAL" id="btn-natural-products">
+          Search Plants
+        </button>
+      </div> 
+    </form>    
+  </div>
 </body>
 </html>
