@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WAND³ np search</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <div class="app">
+    <h1 class="main_heading">WAND<sup>3</sup></h1>
+    <h2>Search natural products</h2>    
+
+    <form method="get" action="np_search.php" class="search-container">
+      <!-- IMPORTANT: add name="q" so PHP sees $_GET['q'] -->
+      <input
+        id="search-input"
+        name="q"
+        type="text"
+        placeholder="Search for natural products..."
+        class="search-input"
+        required
+      />
+
+      <div class="radio-buttons">
+        <label>
+          <input type="radio" name="search-type" value="name" checked>
+          Name
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="smiles">
+          SMILES
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="inchi">
+          InChI
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="inchikey">
+          InChIKey
+        </label>
+        <label>
+          <!-- value: 'pubchem_cid' (no spaces) -->
+          <input type="radio" name="search-type" value="pubmedids">
+          PubChem CID
+        </label>
+      </div>
+
+      <div class="button-one">
+        <button class="search-buttonINDIVIDUAL" id="btn-natural-products">
+          Search Natural Products
+        </button>
+      </div> 
+    </form>    
+  </div>
+</body>
+</html>

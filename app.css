@@ -74,3 +74,10 @@
     justify-content: center;
     align-items: center;
 }
+
+.results {
+  margin-top: 20px;
+  width: 500px;
+  text-align: left;
+  color: aliceblue;
+}

@@ -1,61 +1,12 @@
 <?php
-
 $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 $search_type = isset($_GET['search-type']) ? $_GET['search-type'] : 'name';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-  <title>WAND³ np search</title>
-  <link rel="stylesheet" href="app.css" />
-</head>
-<body>
-    <div class="app">
-        <h1 class="main_heading">WAND<sup>3</sup></h1>
-        <h2>Search natural products</h2>    
-
-        <form method="get" action="np_search.php" class="search-container">
-            <input
-                id="search-input"
-                type="text"
-                placeholder="Search for natural products..."
-                class="search-input"
-            />
-            <div class = "radio-buttons">
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'name' id = 'exact-search' unchecked>
-                    Name
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'smiles' id = 'exact-search' unchecked>
-                    SMILES
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'InChI' id = 'exact-search' unchecked>
-                    InChI
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'InChIKey' id = 'exact-search' unchecked>
-                    InChIKey
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'PubChem CID' id = 'exact-search' unchecked>
-                    PubChem CID
-                </label>
-            </div>
-            <div class = "button-one">
-            <button class="search-buttonINDIVIDUAL" id="btn-natural-products">Search Natural Products</button>
-            </div> 
-        </form>    
-    </div>
-    <?php
-// If no query yet, just show the form and stop
-if ($q === '') {
-    echo "</body></html>";
-    exit;
-}
+<?php
+// Read query and search type from GET
+$q = isset($_GET['q']) ? trim($_GET['q']) : '';
+$search_type = isset($_GET['search-type']) ? $_GET['search-type'] : 'name';
 
 // DB connection settings
 $host     = 'localhost';
@@ -65,7 +16,6 @@ $password = '12345678';
 $charset  = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -75,10 +25,10 @@ $options = [
 try {
     $pdo = new PDO($dsn, $username, $password, $options);
 } catch (PDOException $e) {
-    echo "<p>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>";
-    echo "</body></html>";
-    exit;
+    die("<p>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
 }
+
+// Build WHERE clause
 switch ($search_type) {
     case 'smiles':
         $column   = 'smiles';
@@ -96,6 +46,7 @@ switch ($search_type) {
         $param    = $q;
         break;
     case 'pubchem_cid':
+        // if you want to search PubChem CID, make sure this column name is correct
         $column   = 'pubchem_cid';
         $operator = '=';
         $param    = $q;
@@ -108,8 +59,7 @@ switch ($search_type) {
         break;
 }
 
-
-$sql = "SELECT id, name, inchikey, pubmed_ids
+$sql = "SELECT id, name, inchikey, smiles, inchi, names, pubmedids
         FROM natural_products
         WHERE $column $operator :q
         ORDER BY name
@@ -118,21 +68,38 @@ $sql = "SELECT id, name, inchikey, pubmed_ids
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':q', $param, PDO::PARAM_STR);
 $stmt->execute();
-
 $rows = $stmt->fetchAll();
-
-if (count($rows) > 0) {
-    echo "<h3>Search results:</h3>";
-    echo "<ul>";
-    foreach ($rows as $row) {
-        echo "<li><strong>" . htmlspecialchars($row['name']) . "</strong><br>";
-        echo "InChIKey: " . htmlspecialchars($row['inchikey']) . "<br>";
-        echo "PubMed IDs: " . htmlspecialchars($row['pubmed_ids']) . "</li><br>";
-    }
-    echo "</ul>";
-} else {
-    echo "<p>No results found for '" . htmlspecialchars($q) . "'</p>";
-}
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WAND³</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>WAND³ - results for <?php echo htmlspecialchars($q); ?></h1>
+
+    <?php if ($q === ''): ?>
+      <p>No query provided.</p>
+    <?php elseif (count($rows) === 0): ?>
+      <p>No results found for '<?php echo htmlspecialchars($q); ?>'</p>
+    <?php else: ?>
+      <ul class="results">
+        <?php foreach ($rows as $row): ?>
+          <li>
+            <strong><?php echo htmlspecialchars($row['name']); ?></strong><br>
+            InChIKey: <?php echo htmlspecialchars($row['inchikey']); ?><br>
+            SMILES: <?php echo htmlspecialchars($row['smiles']); ?><br>
+            InChI: <?php echo htmlspecialchars($row['inchi']); ?><br>
+            Names: <?php echo htmlspecialchars($row['names']); ?><br>
+            PubMed IDs: <?php echo htmlspecialchars($row['pubmedids']); ?><br>
+          </li>
+          <br>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
+  </div>
 </body>
 </html>

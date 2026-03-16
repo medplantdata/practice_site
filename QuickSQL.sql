@@ -4,3 +4,5 @@ CREATE TABLE natural_products (
     SMILES TEXT,
     source VARCHAR(255)
 );
+
+SELECT * FROM natural_products;
