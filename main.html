@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WAND³</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <div class="app">
+    <h1 class="main_heading">WAND<sup>3</sup></h1>
+    <h2>Webtool for Acceleration of Neurological Disease Drug Discovery</h2>
+    <h3>Search for plants, natural products, diseases, and drugs</h3>
+
+
+      <div class="button-row">
+        <button class="search-button" id="btn-natural-products">Search Natural Products</button>
+        <button class="search-button" id="btn-plants">Search Plants</button>
+        <button class="search-button" id="btn-diseases">Search Diseases</button>
+        <button class="search-button" id="btn-targets">Search Drug Targets</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const btnNaturalProducts = document.getElementById('btn-natural-products');
+    btnNaturalProducts.addEventListener('click', () => {
+      window.location.href = 'np_search.html';
+    });
+  </script>
+</body>
+</html>
