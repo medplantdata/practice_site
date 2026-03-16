@@ -1,0 +1,3 @@
+CREATE DATABASE wandDB;
+
+USE wandDB;
