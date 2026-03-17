@@ -92,7 +92,7 @@ $rows = $stmt->fetchAll();
         <?php foreach ($rows as $row): ?>
           <div class = "results-box">
           <li>
-            <a href="np_results.php?id=<?php echo urlencode($row['id']); ?>"><strong><?php echo htmlspecialchars($row['genus'] . ' ' . $row['species']); ?></strong></a><br>
+            <a href="plant_results.php?id=<?php echo urlencode($row['id']); ?>"><strong><?php echo htmlspecialchars($row['genus'] . ' ' . $row['species']); ?></strong></a><br>
             Common Names: <?php echo htmlspecialchars($row['common_names']); ?><br>
             Family: <?php echo htmlspecialchars($row['family']); ?><br>
             Genus: <?php echo htmlspecialchars($row['genus']); ?><br>
