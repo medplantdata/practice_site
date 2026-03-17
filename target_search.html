@@ -10,12 +10,14 @@
         <h1 class="main_heading">WAND<sup>3</sup></h1>
         <h2>Search targets</h2>    
 
-        <div class = "search-container">
+        <form method="get" action="target_search.php" class="search-container">
             <input
                 id="search-input"
+                name="q"
                 type="text"
                 placeholder="Search for targets..."
                 class="search-input"
+                required
             />
             <div class = "radio-buttons">
                 <label>
@@ -23,14 +25,18 @@
                     Name
                 </label>
                 <label>
-                    <input type = 'radio' name = 'search-type' value = 'PDB accession' id = 'exact-search' unchecked>
+                    <input type = 'radio' name = 'search-type' value = 'pdbid' id = 'exact-search' unchecked>
                     PDB accession
+                </label>
+                <label>
+                    <input type = 'radio' name = 'search-type' value = 'uniprotid' id = 'exact-search' unchecked>
+                    UniProt ID
                 </label>
             </div>
             <div class = "button-one">
             <button class="search-buttonINDIVIDUAL" id="btn-targets">Search Targets</button>
             </div> 
-        </div>    
+        </form>    
     </div>
 </body>
 </html>

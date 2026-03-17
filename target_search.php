@@ -1,12 +1,6 @@
 <?php
 $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 $search_type = isset($_GET['search-type']) ? $_GET['search-type'] : 'name';
-?>
-
-<?php
-// Read query and search type from GET
-$q = isset($_GET['q']) ? trim($_GET['q']) : '';
-$search_type = isset($_GET['search-type']) ? $_GET['search-type'] : 'name';
 
 // DB connection settings
 $host     = 'localhost';
@@ -30,37 +24,24 @@ try {
 
 // Build WHERE clause
 switch ($search_type) {
-    case 'smiles':
-        $column   = 'smiles';
-        $operator = 'LIKE';
-        $param    = '%' . $q . '%';
-        break;
-    case 'inchi':
-        $column   = 'inchi';
-        $operator = 'LIKE';
-        $param    = '%' . $q . '%';
-        break;
-    case 'inchikey':
-        $column   = 'inchikey';
-        $operator = '=';
-        $param    = $q;
-        break;
-    case 'pubchem_cid':
-        // if you want to search PubChem CID, make sure this column name is correct
-        $column   = 'pubchem_cid';
-        $operator = '=';
-        $param    = $q;
-        break;
     case 'name':
-    default:
         $column   = 'name';
         $operator = 'LIKE';
         $param    = '%' . $q . '%';
         break;
+    case 'uniprotid':
+        $column   = 'uniprotid';
+        $operator = 'LIKE';
+        $param    = '%' . $q . '%';
+        break;
+    case 'pdbid':
+        $column   = 'pdbid';
+        $operator = 'LIKE';
+        $param    = '%' . $q . '%';
+        break;
 }
-
-$sql = "SELECT id, name, inchikey, smiles, inchi, names, pubmedids
-        FROM natural_products
+$sql = "SELECT id, name, pdbid, uniprotid
+        FROM targets
         WHERE $column $operator :q
         ORDER BY name
         LIMIT 50";
@@ -89,12 +70,9 @@ $rows = $stmt->fetchAll();
       <ul class="results">
         <?php foreach ($rows as $row): ?>
           <li>
-            <a href="np_results.php?id=<?php echo urlencode($row['id']); ?>"><strong><?php echo htmlspecialchars($row['name']); ?></strong></a><br>
-            InChIKey: <?php echo htmlspecialchars($row['inchikey']); ?><br>
-            SMILES: <?php echo htmlspecialchars($row['smiles']); ?><br>
-            InChI: <?php echo htmlspecialchars($row['inchi']); ?><br>
-            Names: <?php echo htmlspecialchars($row['names']); ?><br>
-            PubMed IDs: <?php echo htmlspecialchars($row['pubmedids']); ?><br>
+            <strong><?php echo htmlspecialchars($row['name']); ?></strong><br>
+            Protein Data Bank ID: <?php echo htmlspecialchars($row['pdbid']); ?><br>
+            Uniprot ID: <?php echo htmlspecialchars($row['uniprotid']); ?><br>
           </li>
           <br>
         <?php endforeach; ?>

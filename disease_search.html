@@ -10,31 +10,38 @@
         <h1 class="main_heading">WAND<sup>3</sup></h1>
         <h2>Search diseases</h2>    
 
-        <div class = "search-container">
-            <input
-                id="search-input"
-                type="text"
-                placeholder="Search for diseases..."
-                class="search-input"
-            />
-            <div class = "radio-buttons">
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'name' id = 'exact-search' unchecked>
-                    Name
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'ICD-11 code' id = 'exact-search' unchecked>
-                    ICD-11 Code
-                </label>
-                <label>
-                    <input type = 'radio' name = 'search-type' value = 'Category' id = 'exact-search' unchecked>
-                    Category
-                </label>
-                </div>
-            <div class = "button-one">
-            <button class="search-buttonINDIVIDUAL" id="btn-diseases">Search Diseases</button>
-            </div> 
-        </div>    
+    <form method="get" action="disease_search.php" class="search-container">
+      <!-- IMPORTANT: add name="q" so PHP sees $_GET['q'] -->
+      <input
+        id="search-input"
+        name="q"
+        type="text"
+        placeholder="Search for neurological diseases..."
+        class="search-input"
+        required
+      />
+
+      <div class="radio-buttons">
+        <label>
+          <input type="radio" name="search-type" value="name" checked>
+          Name
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="icd11">
+          ICD-11 Code
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="category">
+          Category
+        </label>
+      </div>
+
+      <div class="button-one">
+        <button class="search-buttonINDIVIDUAL" id="btn-natural-products">
+          Search Natural Products
+        </button>
+      </div> 
+    </form>  
     </div>
 </body>
 </html>
