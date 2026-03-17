@@ -76,21 +76,21 @@ $plants = $stmt->fetchAll();
     <h2>Associated Diseases</h2>
     <ul>
         <?php foreach ($diseases as $disease): ?>
-            <li><?php echo htmlspecialchars($disease['name']); ?></li>
+            <a href="disease_results.php?id=<?php echo urlencode($disease['id']); ?>"><strong><?php echo htmlspecialchars($disease['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
 
     <h2>Associated Targets</h2>
     <ul>
         <?php foreach ($targets as $target): ?>
-            <li><?php echo htmlspecialchars($target['name']); ?></li>
+            <a href="target_results.php?id=<?php echo urlencode($target['id']); ?>"><strong><?php echo htmlspecialchars($target['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
 
     <h2>Associated Plants</h2>
     <ul>
         <?php foreach ($plants as $plant): ?>
-            <li><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></li>
+            <a href="plant_results.php?id=<?php echo urlencode($plant['id']); ?>"><strong><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
     </div>

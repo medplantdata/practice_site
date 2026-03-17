@@ -20,35 +20,35 @@ try {
     die("<p>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
 }
 
-$targetSQL = "SELECT *
-              FROM targets 
-              WHERE id = :id";
+$diseaseSQL = "SELECT *
+               FROM diseases 
+               WHERE id = :id";
+$stmt = $pdo->prepare($diseaseSQL);
+$stmt->execute(['id' => $id]);
+$diseases = $stmt->fetch();
+
+
+if (!$diseases) {
+    die('<p>Disease not found.</p>');
+}
+
+$targetSQL = "SELECT t.*
+              FROM targets as t
+              JOIN targets_diseases AS td ON t.id = td.targets_id
+              WHERE td.diseases_id = :id";
 $stmt = $pdo->prepare($targetSQL);
 $stmt->execute(['id' => $id]);
-$targets = $stmt->fetch();
-
-if (!$targets) {
-    die('<p>Target not found.</p>');
-}
+$targets = $stmt->fetchAll();
 
 $npSQL = "SELECT np.*
           FROM natural_products AS np
-          JOIN np_targets AS nt ON np.id = nt.natural_products_id
-          WHERE nt.targets_id = :id";
+          JOIN np_diseases AS nd ON np.id = nd.natural_products_id
+          WHERE nd.diseases_id = :id";
 $stmt = $pdo->prepare($npSQL);
 $stmt->execute(['id' => $id]);
 $np = $stmt->fetchAll();
 
 $npIDs = array_column($np, 'id');
-
-$diseaseSQL = "SELECT d.*
-               FROM diseases AS d
-               JOIN targets_diseases AS td ON d.id = td.diseases_id
-               WHERE td.targets_id = :id";
-$stmt = $pdo->prepare($diseaseSQL);
-$stmt->execute(['id' => $id]);
-$diseases = $stmt->fetchAll();
-
 
 if (!$npIDs) {
     $plants = [];
@@ -74,23 +74,23 @@ if (!$npIDs) {
 </head>
 <body>
     <div class = "app">
-    <h1>WAND³ - results for <?php echo htmlspecialchars($targets['name']); ?></h1>
-    <h2>Target details</h2>
-    <p><strong>Name:</strong> <?php echo htmlspecialchars($targets['name']); ?></p>
-    <p><strong>PDB ID:</strong> <?php echo htmlspecialchars($targets['pdbid']); ?></p>
-    <p><strong>UniProt ID:</strong> <?php echo htmlspecialchars($targets['uniprotid']); ?></p>
+    <h1>WAND³ - results for <?php echo htmlspecialchars($diseases['name']); ?></h1>
+    <h2>Disease details</h2>
+    <p><strong>Name:</strong> <?php echo htmlspecialchars($diseases['name']); ?></p>
+    <p><strong>ICD-11 code:</strong> <?php echo htmlspecialchars($diseases['icd11']); ?></p>
+    <p><strong>Category:</strong> <?php echo htmlspecialchars($diseases['category']); ?></p>
 
-    <h2>Associated ligands</h2>
+    <h2>Associated drugs</h2>
     <ul>
         <?php foreach ($np as $ligand): ?>
             <a href="np_results.php?id=<?php echo urlencode($ligand['id']); ?>"><strong><?php echo htmlspecialchars($ligand['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
 
-    <h2>Associated Diseases</h2>
+    <h2>Associated targets</h2>
     <ul>
-        <?php foreach ($diseases as $disease): ?>
-            <a href="disease_results.php?id=<?php echo urlencode($disease['id']); ?>"><strong><?php echo htmlspecialchars($disease['name']); ?></strong></a><br>
+        <?php foreach ($targets as $target): ?>
+            <a href="target_results.php?id=<?php echo urlencode($target['id']); ?>"><strong><?php echo htmlspecialchars($target['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
 
