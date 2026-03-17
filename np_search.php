@@ -88,15 +88,19 @@ $rows = $stmt->fetchAll();
     <?php else: ?>
       <ul class="results">
         <?php foreach ($rows as $row): ?>
+          <div class = "results-box">
           <li>
+            
             <a href="np_results.php?id=<?php echo urlencode($row['id']); ?>"><strong><?php echo htmlspecialchars($row['name']); ?></strong></a><br>
             InChIKey: <?php echo htmlspecialchars($row['inchikey']); ?><br>
             SMILES: <?php echo htmlspecialchars($row['smiles']); ?><br>
             InChI: <?php echo htmlspecialchars($row['inchi']); ?><br>
             Names: <?php echo htmlspecialchars($row['names']); ?><br>
             PubMed IDs: <?php echo htmlspecialchars($row['pubmedids']); ?><br>
+        
           </li>
           <br>
+          </div>
         <?php endforeach; ?>
       </ul>
     <?php endif; ?>

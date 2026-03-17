@@ -75,31 +75,38 @@ if (!$npIDs) {
 <body>
     <div class = "app">
     <h1>WAND³ - results for <?php echo htmlspecialchars($diseases['name']); ?></h1>
+    <div class="results-box">
     <h2>Disease details</h2>
     <p><strong>Name:</strong> <?php echo htmlspecialchars($diseases['name']); ?></p>
     <p><strong>ICD-11 code:</strong> <?php echo htmlspecialchars($diseases['icd11']); ?></p>
     <p><strong>Category:</strong> <?php echo htmlspecialchars($diseases['category']); ?></p>
-
+    </div>
+    <div class="results-box">
     <h2>Associated drugs</h2>
-    <ul>
+        <ul>
         <?php foreach ($np as $ligand): ?>
             <a href="np_results.php?id=<?php echo urlencode($ligand['id']); ?>"><strong><?php echo htmlspecialchars($ligand['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
-
+    </div>
+    
+    <div class="results-box">
     <h2>Associated targets</h2>
     <ul>
         <?php foreach ($targets as $target): ?>
             <a href="target_results.php?id=<?php echo urlencode($target['id']); ?>"><strong><?php echo htmlspecialchars($target['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
-
+        </div>
+    
+    <div class="results-box">
     <h2>Associated Plants (associated by np)</h2>
     <ul>
         <?php foreach ($plants as $plant): ?>
-            <a href="np_results.php?id=<?php echo urlencode($plant['id']); ?>"><strong><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></strong></a><br>
+            <a href="plant_results.php?id=<?php echo urlencode($plant['id']); ?>"><strong><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
+        </div>
     </div>
 </body>
 </html>

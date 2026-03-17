@@ -64,7 +64,11 @@ $plants = $stmt->fetchAll();
 </head>
 <body>
     <div class = "app">
+
     <h1>WAND³ - results for <?php echo htmlspecialchars($np['name']); ?></h1>
+
+    <div class="results-box">
+    
     <h2>Natural Product Details</h2>
     <p><strong>Name:</strong> <?php echo htmlspecialchars($np['name']); ?></p>
     <p><strong>InChIKey:</strong> <?php echo htmlspecialchars($np['inchikey']); ?></p>
@@ -72,27 +76,33 @@ $plants = $stmt->fetchAll();
     <p><strong>InChI:</strong> <?php echo htmlspecialchars($np['inchi']); ?></p>
     <p><strong>Other Names:</strong> <?php echo htmlspecialchars($np['names']); ?></p>
     <p><strong>PubMed IDs:</strong> <?php echo htmlspecialchars($np['pubmedids']); ?></p>
-
+    </div>
+    <div class="results-box">
     <h2>Associated Diseases</h2>
     <ul>
         <?php foreach ($diseases as $disease): ?>
             <a href="disease_results.php?id=<?php echo urlencode($disease['id']); ?>"><strong><?php echo htmlspecialchars($disease['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
+    </div>
 
+    <div class="results-box">
     <h2>Associated Targets</h2>
     <ul>
         <?php foreach ($targets as $target): ?>
             <a href="target_results.php?id=<?php echo urlencode($target['id']); ?>"><strong><?php echo htmlspecialchars($target['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
+    </div>
 
+    <div class="results-box">
     <h2>Associated Plants</h2>
     <ul>
         <?php foreach ($plants as $plant): ?>
             <a href="plant_results.php?id=<?php echo urlencode($plant['id']); ?>"><strong><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
+    </div>
     </div>
 </body>
 </html>

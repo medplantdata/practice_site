@@ -35,8 +35,8 @@ if (!$plants) {
 
 $npSQL = "SELECT nc.*
           FROM natural_products AS nc
-          JOIN np_plants AS np ON np.id = nc.id
-          WHERE nc.natural_products_id = :id";
+          JOIN np_plants AS np ON np.natural_products_id = nc.id
+          WHERE np.plants_id = :id";
 $stmt = $pdo->prepare($npSQL);
 $stmt->execute(['id' => $id]);
 $np = $stmt->fetchAll();
@@ -56,13 +56,13 @@ if (!$npIDs) {
     $stmt->execute($npIDs);
     $targets = $stmt->fetchAll();
 
-    $diseaseSQL = "SELECT d.*
+$diseaseSQL = "SELECT d.*
                FROM diseases AS d
                JOIN np_diseases AS nd ON d.id = nd.diseases_id
                WHERE nd.natural_products_id IN ($placeholders)";
-    $stmt = $pdo->prepare($diseaseSQL);
-    $stmt->execute(['id' => $id]);
-    $diseases = $stmt->fetchAll();
+$stmt = $pdo->prepare($diseaseSQL);
+$stmt->execute($npIDs);
+$diseases = $stmt->fetchAll();
 }  
 
 ?>
@@ -76,32 +76,43 @@ if (!$npIDs) {
 </head>
 <body>
     <div class = "app">
-    <h1>WAND³ - results for <?php echo htmlspecialchars($targets['name']); ?></h1>
-    <h2>Target details</h2>
-    <p><strong>Name:</strong> <?php echo htmlspecialchars($targets['name']); ?></p>
-    <p><strong>PDB ID:</strong> <?php echo htmlspecialchars($targets['pdbid']); ?></p>
-    <p><strong>UniProt ID:</strong> <?php echo htmlspecialchars($targets['uniprotid']); ?></p>
+    <h1>WAND³ - results for <?php echo htmlspecialchars($plants['genus'] . ' ' . $plants['species']); ?></h1>
+    <div class = "results-box">
+    <h2>Plant details</h2>
+    <p><strong>Scientific name:</strong> <?php echo htmlspecialchars($plants['genus'] . ' ' . $plants['species']); ?></p>
+    <p><strong>Common names:</strong> <?php echo htmlspecialchars($plants['common_names']); ?></p>
+    <p><strong>Ethnobotanical use:</strong> <?php echo htmlspecialchars($plants['uses']); ?></p>
+    <p><strong>Locations</strong> <?php echo htmlspecialchars($plants['locations']); ?></p>
+    <p><strong>Family:</strong> <?php echo htmlspecialchars($plants['family']); ?></p>
+    <p><strong>Genus:</strong> <?php echo htmlspecialchars($plants['genus']); ?></p>
+    <p><strong>Species:</strong> <?php echo htmlspecialchars($plants['species']); ?></p>
+    </div>
 
-    <h2>Associated ligands</h2>
+    <div class = "results-box">
+    <h2>Natural products</h2>
     <ul>
         <?php foreach ($np as $ligand): ?>
             <a href="np_results.php?id=<?php echo urlencode($ligand['id']); ?>"><strong><?php echo htmlspecialchars($ligand['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
+        </div>
 
-    <h2>Associated Diseases</h2>
+    <div class = "results-box">
+    <h2>Associated Diseases (by natural product)</h2>
     <ul>
         <?php foreach ($diseases as $disease): ?>
             <a href="disease_results.php?id=<?php echo urlencode($disease['id']); ?>"><strong><?php echo htmlspecialchars($disease['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
-
-    <h2>Associated Plants (associated by np)</h2>
+    </div>
+    <div class = "results-box">
+    <h2>Associated targets (associated by np)</h2>
     <ul>
-        <?php foreach ($plants as $plant): ?>
-            <li><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></li>
+        <?php foreach ($targets as $target): ?>
+            <a href="target_results.php?id=<?php echo urlencode($target['id']); ?>"><strong><?php echo htmlspecialchars($target['name']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
+        </div>
     </div>
 </body>
 </html>

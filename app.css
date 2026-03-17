@@ -81,3 +81,14 @@
   text-align: left;
   color: aliceblue;
 }
+
+.results-box{
+  font-size: 20px;
+  background-color: black;
+  border: 1px solid blueviolet;
+  padding: 25px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+}

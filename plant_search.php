@@ -90,8 +90,9 @@ $rows = $stmt->fetchAll();
     <?php else: ?>
       <ul class="results">
         <?php foreach ($rows as $row): ?>
+          <div class = "results-box">
           <li>
-            <strong><?php echo htmlspecialchars($row['genus'] . ' ' . $row['species']); ?></strong><br>
+            <a href="np_results.php?id=<?php echo urlencode($row['id']); ?>"><strong><?php echo htmlspecialchars($row['genus'] . ' ' . $row['species']); ?></strong></a><br>
             Common Names: <?php echo htmlspecialchars($row['common_names']); ?><br>
             Family: <?php echo htmlspecialchars($row['family']); ?><br>
             Genus: <?php echo htmlspecialchars($row['genus']); ?><br>
@@ -100,6 +101,7 @@ $rows = $stmt->fetchAll();
             Locations: <?php echo htmlspecialchars($row['locations']); ?><br>
           </li>
           <br>
+        </div>
         <?php endforeach; ?>
       </ul>
     <?php endif; ?>

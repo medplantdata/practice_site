@@ -70,9 +70,11 @@ $rows = $stmt->fetchAll();
       <ul class="results">
         <?php foreach ($rows as $row): ?>
           <li>
+            <div class="results-box">
             <a href="disease_results.php?id=<?php echo urlencode($row['id']); ?>"><strong><?php echo htmlspecialchars($row['name']); ?></strong></a><br>
             ICD-11 Code: <?php echo htmlspecialchars($row['icd11']); ?><br>
             Category: <?php echo htmlspecialchars($row['category']); ?><br>
+            </div>
           </li>
           <br>
         <?php endforeach; ?>
