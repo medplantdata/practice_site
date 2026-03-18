@@ -1,9 +1,4 @@
 <?php
-$q = isset($_GET['q']) ? trim($_GET['q']) : '';
-$search_type = isset($_GET['search-type']) ? $_GET['search-type'] : 'name';
-?>
-
-<?php
 // Read query and search type from GET
 $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 $search_type = isset($_GET['search-type']) ? $_GET['search-type'] : 'name';
