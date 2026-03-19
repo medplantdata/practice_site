@@ -73,6 +73,10 @@ $rows = $stmt->fetchAll();
   <link rel="stylesheet" href="app.css" />
 </head>
 <body>
+      <div class = home-help-box>
+      <a href = "https://www.carlingblacklabel.co.za/">Help</a>
+      <a href = main.html>Home</a>
+    </div>
   <div class="app">
     <h1>WAND³ - results for <?php echo htmlspecialchars($q); ?></h1>
 
