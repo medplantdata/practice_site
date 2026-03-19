@@ -67,10 +67,10 @@ $rows = $stmt->fetchAll();
     <?php elseif (count($rows) === 0): ?>
       <p>No results found for '<?php echo htmlspecialchars($q); ?>'</p>
     <?php else: ?>
-      <ul class="results">
+      <ul class="results-box">
         <?php foreach ($rows as $row): ?>
           <li>
-            <strong><?php echo htmlspecialchars($row['name']); ?></strong><br>
+            <a href="target_results.php?id=<?php echo urlencode($row['id']); ?>"><strong><?php echo htmlspecialchars($row['name']); ?></strong></a><br>
             Protein Data Bank ID: <?php echo htmlspecialchars($row['pdbid']); ?><br>
             Uniprot ID: <?php echo htmlspecialchars($row['uniprotid']); ?><br>
           </li>

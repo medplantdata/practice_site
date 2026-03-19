@@ -127,6 +127,7 @@ h3{
 }
 
 .results-box{
+  align-self: center;
   font-size: 20px;
   background-color: black;
   border: 1px solid blueviolet;

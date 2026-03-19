@@ -54,7 +54,7 @@ if (!$npIDs) {
     $plants = [];
 } else {
     $placeholders = implode(',', array_fill(0, count($npIDs), '?'));
-    $plantSQL = "SELECT p.*
+    $plantSQL = "SELECT DISTINCT p.*
                  FROM plants AS p
                  JOIN np_plants AS np ON p.id = np.plants_id
                  WHERE np.natural_products_id IN ($placeholders)";

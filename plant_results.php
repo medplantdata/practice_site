@@ -48,7 +48,7 @@ if (!$npIDs) {
     $diseases = [];
 } else {
     $placeholders = implode(',', array_fill(0, count($npIDs), '?'));
-    $targetSQL = "SELECT t.*
+    $targetSQL = "SELECT DISTINCT t.*
               FROM targets AS t
               JOIN np_targets AS nt ON t.id = nt.targets_id
               WHERE nt.natural_products_id IN ($placeholders)";
@@ -56,7 +56,7 @@ if (!$npIDs) {
     $stmt->execute($npIDs);
     $targets = $stmt->fetchAll();
 
-$diseaseSQL = "SELECT d.*
+$diseaseSQL = "SELECT DISTINCT d.*
                FROM diseases AS d
                JOIN np_diseases AS nd ON d.id = nd.diseases_id
                WHERE nd.natural_products_id IN ($placeholders)";

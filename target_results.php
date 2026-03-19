@@ -54,7 +54,7 @@ if (!$npIDs) {
     $plants = [];
 } else {
     $placeholders = implode(',', array_fill(0, count($npIDs), '?'));
-    $plantSQL = "SELECT p.*
+    $plantSQL = "SELECT DISTINCT p.*
                  FROM plants AS p
                  JOIN np_plants AS np ON p.id = np.plants_id
                  WHERE np.natural_products_id IN ($placeholders)";
@@ -104,7 +104,7 @@ if (!$npIDs) {
     <h2>Associated Plants (associated by np)</h2>
     <ul>
         <?php foreach ($plants as $plant): ?>
-            <a href="np_results.php?id=<?php echo urlencode($plant['id']); ?>"><strong><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></strong></a><br>
+            <a href="plant_results.php?id=<?php echo urlencode($plant['id']); ?>"><strong><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></strong></a><br>
         <?php endforeach; ?>
     </ul>
         </div>
