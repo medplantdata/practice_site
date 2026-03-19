@@ -61,12 +61,12 @@ $plants = $stmt->fetchAll();
   <meta charset="UTF-8" />
   <title>WAND³</title>
   <link rel="stylesheet" href="app.css" />
-  <script src="https://unpkg.com/@rdkit/rdkit/dist/RDKit_minimal.js"></script>
+   <script src="https://unpkg.com/@rdkit/rdkit/dist/RDKit_minimal.js"></script>
   <script>
       window.RDKitReady = window.initRDKitModule().then(function (RDKit) {
       window.RDKit = RDKit;
     });
-  </script>  
+  </script>
 </head>
 <body>
         <div class = home-help-box>
