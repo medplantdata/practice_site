@@ -63,6 +63,7 @@ $plants = $stmt->fetchAll();
     <title>WAND³</title>
     <link rel="stylesheet" href="app.css" />
     <script src="https://unpkg.com/@rdkit/rdkit/dist/RDKit_minimal.js"></script>
+    <script src="https://unpkg.com/smiles-drawer@2.1.7/dist/smiles-drawer.min.js"></script>
     <script>
         window.RDKitReady = window.initRDKitModule().then(function(RDKit) {
             window.RDKit = RDKit;
@@ -78,90 +79,75 @@ $plants = $stmt->fetchAll();
     <div class="app">
 
         <h1>WAND³ - results for <?php echo htmlspecialchars($np['name']); ?></h1>
-        <div class = "np-results-centering-box">
-        <div class="results-box" style="align-self: center;">
-            <h2>Natural Product Details:</h2>
-            <p><strong>Name:</strong> <?php echo htmlspecialchars($np['name']); ?></p>
-            <p><strong>InChIKey:</strong> <?php echo htmlspecialchars($np['inchikey']); ?></p>
-            <p><strong>SMILES:</strong> <?php echo htmlspecialchars($np['SMILES']); ?></p>
-            <p><strong>InChI:</strong> <?php echo htmlspecialchars($np['inchi']); ?></p>
-            <p><strong>Other Names:</strong> <?php echo htmlspecialchars($np['names']); ?></p>
-            <p><strong>PubMed IDs:</strong> <?php echo htmlspecialchars($np['pubmedids']); ?></p>
-        </div>
-        <div class="results-row">
-            <div class="results-box-np">
-                <h2>Associated Diseases:</h2>
-                <ul>
-                    <?php foreach ($diseases as $disease): ?>
-                        <a href="disease_results.php?id=<?php echo urlencode($disease['id']); ?>"><strong><?php echo htmlspecialchars($disease['name']); ?></strong></a><br>
-                    <?php endforeach; ?>
-                </ul>
-
-
-
-                <h2>Associated Targets:</h2>
-                <ul>
-                    <?php foreach ($targets as $target): ?>
-                        <a href="target_results.php?id=<?php echo urlencode($target['id']); ?>"><strong><?php echo htmlspecialchars($target['name']); ?></strong></a><br>
-                    <?php endforeach; ?>
-                </ul>
-
-                <h2>Associated Plants:</h2>
-                <ul>
-                    <?php foreach ($plants as $plant): ?>
-                        <a href="plant_results.php?id=<?php echo urlencode($plant['id']); ?>"><strong><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></strong></a><br>
-                    <?php endforeach; ?>
-                </ul>
+        <div class="np-results-centering-box">
+            <div class="results-box" style="align-self: center;">
+                <h2>Natural Product Details:</h2>
+                <p><strong>Name:</strong> <?php echo htmlspecialchars($np['name']); ?></p>
+                <p><strong>InChIKey:</strong> <?php echo htmlspecialchars($np['inchikey']); ?></p>
+                <p><strong>SMILES:</strong> <?php echo htmlspecialchars($np['SMILES']); ?></p>
+                <p><strong>InChI:</strong> <?php echo htmlspecialchars($np['inchi']); ?></p>
+                <p><strong>Other Names:</strong> <?php echo htmlspecialchars($np['names']); ?></p>
+                <p><strong>PubMed IDs:</strong> <?php echo htmlspecialchars($np['pubmedids']); ?></p>
             </div>
-            <div class="np-chem-box">
-                <h2>Chemical structure:</h2>
-                <canvas id="canvas" width="600" height="600"></canvas>
-                <script>
-                    window.RDKitReady.then(function() {
-                        var smiles = "<?php echo htmlspecialchars($np['SMILES']); ?>";
-                        var mol = RDKit.get_mol(smiles);
-                        const opts = {
-                            bondLineWidth: 1.5,
-                            padding: 0.1,
-                            includeAtomNumbers: false,
-                            fixedBondLength: 25,
-                            kekulize: true,
-                            canonical: true,
-                            addChiralHs: true,
-                            wedgeBonds: true,
-                            clearBackground: true
-                        };
+            <div class="results-row">
+                <div class="results-box-np">
+                    <h2>Associated Diseases:</h2>
+                    <ul>
+                        <?php foreach ($diseases as $disease): ?>
+                            <a href="disease_results.php?id=<?php echo urlencode($disease['id']); ?>"><strong><?php echo htmlspecialchars($disease['name']); ?></strong></a><br>
+                        <?php endforeach; ?>
+                    </ul>
 
-                        var canvas = document.getElementById("canvas");
-                        mol.draw_to_canvas(canvas, -1, -1);
-                    });
-                </script>
-            </div>
-            <div class="np-chem-box">
-                <h2>Descriptors:</h2>
-                <pre id="output"></pre>
-                <script>
-                    window.RDKitReady.then(function() {
-                        var smiles = "<?php echo htmlspecialchars($np['SMILES']); ?>";
-                        var mol = RDKit.get_mol(smiles);
 
-                        var descriptors = JSON.parse(mol.get_descriptors());
-                        var descriptorsSorted = Object.keys(descriptors).sort(function(a, b) {
-                            return a.localeCompare(b, undefined, {
-                                sensitivity: 'base'
-                            });
-                        }).map(function(descriptor) {
-                            return [descriptor, descriptors[descriptor]]
-                        })
 
-                        var lines = descriptorsSorted.map(([name, value]) => `${name}: ${value}`).join('\n');
-                        document.getElementById("output").textContent = lines;
-                    });
-                </script>
+                    <h2>Associated Targets:</h2>
+                    <ul>
+                        <?php foreach ($targets as $target): ?>
+                            <a href="target_results.php?id=<?php echo urlencode($target['id']); ?>"><strong><?php echo htmlspecialchars($target['name']); ?></strong></a><br>
+                        <?php endforeach; ?>
+                    </ul>
+
+                    <h2>Associated Plants:</h2>
+                    <ul>
+                        <?php foreach ($plants as $plant): ?>
+                            <a href="plant_results.php?id=<?php echo urlencode($plant['id']); ?>"><strong><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></strong></a><br>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <div class="np-chem-box">
+                    <h2>Chemical structure:</h2>
+                    <img id="canvas" width="600" height="600"></img>
+                    <script>
+                        let moleculeOptions = {};
+                        let reactionOptions = {};
+                        let sd = new SmiDrawer(moleculeOptions, reactionOptions);
+                        sd.draw('<?php echo htmlspecialchars($np['SMILES']); ?>', '#canvas')
+                    </script>
+                </div>
+                <div class="np-chem-box">
+                    <h2>Descriptors:</h2>
+                    <pre id="output"></pre>
+                    <script>
+                        window.RDKitReady.then(function() {
+                            var smiles = "<?php echo htmlspecialchars($np['SMILES']); ?>";
+                            var mol = RDKit.get_mol(smiles);
+
+                            var descriptors = JSON.parse(mol.get_descriptors());
+                            var descriptorsSorted = Object.keys(descriptors).sort(function(a, b) {
+                                return a.localeCompare(b, undefined, {
+                                    sensitivity: 'base'
+                                });
+                            }).map(function(descriptor) {
+                                return [descriptor, descriptors[descriptor]]
+                            })
+
+                            var lines = descriptorsSorted.map(([name, value]) => `${name}: ${value}`).join('\n');
+                            document.getElementById("output").textContent = lines;
+                        });
+                    </script>
+                </div>
             </div>
         </div>
-                    </div>
     </div>
 </body>
-
 </html>
