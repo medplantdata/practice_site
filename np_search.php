@@ -23,7 +23,6 @@ try {
     die("<p>Database connection failed: " . htmlspecialchars($e->getMessage()) . "</p>");
 }
 
-// Build WHERE clause
 switch ($search_type) {
     case 'smiles':
         $column   = 'smiles';
@@ -41,7 +40,6 @@ switch ($search_type) {
         $param    = $q;
         break;
     case 'pubchem_cid':
-        // if you want to search PubChem CID, make sure this column name is correct
         $column   = 'pubchem_cid';
         $operator = '=';
         $param    = $q;
@@ -82,9 +80,28 @@ $rows = $stmt->fetchAll();
 
     <?php if ($q === ''): ?>
       <p>No query provided.</p>
-    <?php elseif (count($rows) === 0): ?>
-      <p>No results found for '<?php echo htmlspecialchars($q); ?>'</p>
-    <?php else: ?>
+    <?php elseif (count($rows) === 0): 
+      switch ($search_type) {
+    case 'smiles':
+        $URL = "https://pubchem.ncbi.nlm.nih.gov/compound/" . urlencode($q) . "#section=Canonical-SMILES&embed=true";
+        break;
+    case 'inchi':
+        $URL = "https://pubchem.ncbi.nlm.nih.gov/compound/" . urlencode($q) . "#section=InChI&embed=true";
+        break;
+    case 'inchikey':
+        $URL = "https://pubchem.ncbi.nlm.nih.gov/compound/" . urlencode($q) . "#section=InChIKey&embed=true";
+        break;
+    case 'pubchem_cid':
+        $URL = "https://pubchem.ncbi.nlm.nih.gov/compound/" . urlencode($q) . "#section=Top&embed=true";
+    case 'name':
+    default:
+        $URL = "https://pubchem.ncbi.nlm.nih.gov/compound/" . urlencode($q) . "#section=IUPAC-Name&embed=true";
+        break;
+}
+      ?>
+      <h2>No results in our database found for '<?php echo htmlspecialchars($q); ?>' but PubChem may have an entry for it.</h2>
+      <iframe class="pubchem-widget" src="<?php echo urlencode($URL); ?>#section=IUPAC-Name&embed=true" style="width: 99.5%; height: 600px; border-color: blueviolet"></iframe>
+     <?php else: ?>
       <ul class="results">
         <?php foreach ($rows as $row): ?>
           <div class = "results-box">
