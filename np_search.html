@@ -4,9 +4,6 @@
   <meta charset="UTF-8" />
   <title>WAND³ np search</title>
   <link rel="stylesheet" type="text/css" href="app.css" />
-  <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/kekule/dist/themes/default/kekule.css" />
-  <script src="https://cdn.jsdelivr.net/npm/kekule/dist/kekule.min.js"></script>
 </head>
 <body>
       <div class = home-help-box>
@@ -15,19 +12,8 @@
     </div>
   <div class="app">
     <h1 class="main_heading">WAND<sup>3</sup></h1>
-    <h2>Search natural products with text or Kekule Composer</h2>    
-    <div id="composer" style="width:800px;height:400px;align-self: center;" data-widget="Kekule.Editor.Composer"></div>
-    <script>
-      Kekule.X.domReady(function () {
-        Kekule.Widget.initAll(document);  
-      });
-    </script>
-<!--button does nothing-->
-    <div class="button-one">
-      <button class="search-buttonINDIVIDUAL" id="btn-natural-products-structure" style="align-self: center;">
-          Search structure
-      </button>
-    </div> 
+    <h2>Search natural products</h2>    
+     
 
     <form method="get" action="np_search.php" class="search-container">
       <!-- IMPORTANT: add name="q" so PHP sees $_GET['q'] -->

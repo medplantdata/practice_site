@@ -80,14 +80,14 @@ if (!$npIDs) {
     <div class = "app">
     <h1>WAND³ - results for <?php echo htmlspecialchars($targets['name']); ?></h1>
     <div class = "results-box">
-    <h2>Target details</h2>
+    <h2>Target details:</h2>
     <p><strong>Name:</strong> <?php echo htmlspecialchars($targets['name']); ?></p>
     <p><strong>PDB ID:</strong> <?php echo htmlspecialchars($targets['pdbid']); ?></p>
     <p><strong>UniProt ID:</strong> <?php echo htmlspecialchars($targets['uniprotid']); ?></p>
     </div>
 
     <div class = "results-box">
-    <h2>Associated ligands</h2>
+    <h2>Associated ligands:</h2>
     <ul>
         <?php foreach ($np as $ligand): ?>
             <a href="np_results.php?id=<?php echo urlencode($ligand['id']); ?>"><strong><?php echo htmlspecialchars($ligand['name']); ?></strong></a><br>
@@ -96,7 +96,7 @@ if (!$npIDs) {
         </div>
 
     <div class = "results-box">
-    <h2>Associated Diseases</h2>
+    <h2>Associated Diseases:</h2>
     <ul>
         <?php foreach ($diseases as $disease): ?>
             <a href="disease_results.php?id=<?php echo urlencode($disease['id']); ?>"><strong><?php echo htmlspecialchars($disease['name']); ?></strong></a><br>
@@ -105,7 +105,7 @@ if (!$npIDs) {
     </div>
 
     <div class = "results-box">
-    <h2>Associated Plants (associated by np)</h2>
+    <h2>Associated Plants (associated by np):</h2>
     <ul>
         <?php foreach ($plants as $plant): ?>
             <a href="plant_results.php?id=<?php echo urlencode($plant['id']); ?>"><strong><?php echo htmlspecialchars($plant['genus'] . ' ' . $plant['species']); ?></strong></a><br>
